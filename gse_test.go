@@ -1,15 +1,16 @@
 package gse
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/vcaesar/tt"
 )
 
-func init() {
-	prodSeg.LoadDict()
-	prodSeg.LoadStop("zh")
-}
+//func init() {
+//	prodSeg.LoadDict()
+//	prodSeg.LoadStop("zh")
+//}
 
 func TestHMM(t *testing.T) {
 	tt.Equal(t, 587878, len(prodSeg.Dict.Tokens))
@@ -170,4 +171,18 @@ func TestStop(t *testing.T) {
 
 	s = FilterLang(t1, "Han")
 	tt.Equal(t, "hibot机器人", s)
+}
+
+func TestZH(t *testing.T) {
+
+	seg := New("zh,data/idf.txt", "alpha")
+	text := "我爱北京天安门"
+	tb := []byte(text)
+
+	//posSeg := Segmenter{}
+	segments := seg.Segment(tb)
+	fmt.Println(ToSlice(segments, true))
+
+	//log.Println(seg.String(text, true))
+	t.Log()
 }
